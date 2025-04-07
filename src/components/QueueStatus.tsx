@@ -4,7 +4,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Button } from '@/components/ui/button';
 import { useQueue } from '@/contexts/QueueContext';
 import { QueueItem } from '@/lib/types';
-import { Clock, Users, Check, AlertTriangle } from 'lucide-react';
+import { Clock, Users, Check, AlertTriangle, LogOut } from 'lucide-react';
 
 interface QueueStatusProps {
   userQueueItem: QueueItem;
@@ -36,34 +36,37 @@ const QueueStatus: React.FC<QueueStatusProps> = ({ userQueueItem, onCancelQueue 
   };
 
   return (
-    <Card className="bg-white border border-gray-200 shadow-sm">
+    <Card className="glass-card shadow-lg border-none overflow-hidden">
+      <div className={`h-1.5 ${userQueueItem.status === 'active' ? 'bg-green-500' : 'bg-queue-primary'}`} />
       <CardHeader className="pb-2">
-        <CardTitle className="text-xl flex items-center justify-between">
-          <span>Your Queue Status</span>
+        <div className="flex items-center justify-between">
+          <div>
+            <CardTitle className="text-xl">Your Queue Status</CardTitle>
+            <CardDescription className="mt-1">
+              {userQueueItem.serviceName}
+            </CardDescription>
+          </div>
           {getStatusIcon()}
-        </CardTitle>
-        <CardDescription>
-          {userQueueItem.serviceName}
-        </CardDescription>
+        </div>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-2 gap-4 py-2">
-          <div className="text-center">
-            <div className={`queue-position ${userQueueItem.status === 'active' ? 'queue-position-active' : 'queue-position-waiting'} mx-auto`}>
+          <div className="text-center bg-blue-50 rounded-lg p-4">
+            <div className={`queue-position ${userQueueItem.status === 'active' ? 'queue-position-active' : 'queue-position-waiting'} mx-auto mb-2 h-12 w-12 text-xl`}>
               {userQueueItem.position}
             </div>
-            <p className="queue-label mt-1">Your Position</p>
+            <p className="font-medium text-gray-700">Your Position</p>
           </div>
-          <div className="text-center">
+          <div className="text-center bg-blue-50 rounded-lg p-4">
             <div className="queue-stat text-queue-primary">
               {stats.totalWaiting}
             </div>
-            <p className="queue-label">People Waiting</p>
+            <p className="font-medium text-gray-700">People Waiting</p>
           </div>
         </div>
         
-        <div className="mt-4 text-center bg-blue-50 p-3 rounded-md">
-          <p className="text-queue-primary font-medium">
+        <div className="mt-6 text-center p-4 rounded-lg border border-blue-100 bg-blue-50">
+          <p className={`font-medium ${userQueueItem.status === 'active' ? 'text-green-600' : 'text-queue-primary'}`}>
             {getStatusMessage()}
           </p>
         </div>
@@ -71,9 +74,10 @@ const QueueStatus: React.FC<QueueStatusProps> = ({ userQueueItem, onCancelQueue 
       <CardFooter>
         <Button 
           variant="outline" 
-          className="w-full text-red-500 hover:text-red-700 hover:bg-red-50"
+          className="w-full text-red-500 hover:text-red-700 hover:bg-red-50 border-red-100 flex items-center justify-center gap-2"
           onClick={onCancelQueue}
         >
+          <LogOut className="h-4 w-4" />
           Leave Queue
         </Button>
       </CardFooter>
