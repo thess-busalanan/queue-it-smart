@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Button } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { useQueue } from '@/contexts/QueueContext';
 import { currentUser } from '@/lib/data';
 import QueueStatus from '@/components/QueueStatus';

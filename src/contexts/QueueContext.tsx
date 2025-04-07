@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { QueueItem, Service, QueueStats } from '@/lib/types';
 import { initialQueue, services, getEstimatedWaitTime } from '@/lib/data';
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 interface QueueContextType {
   queue: QueueItem[];
@@ -111,7 +111,7 @@ export const QueueProvider = ({ children }: { children: ReactNode }) => {
     if (itemIndex === -1) return;
     
     const updatedQueue = [...queue];
-    updatedQueue[itemIndex] = { ...updatedQueue[itemIndex], status: 'cancelled' };
+    updatedQueue[itemIndex] = { ...updatedQueue[itemIndex], status: 'cancelled' as const };
     
     setQueue(reorderQueue(updatedQueue));
     
@@ -126,7 +126,7 @@ export const QueueProvider = ({ children }: { children: ReactNode }) => {
     if (itemIndex === -1) return;
     
     const updatedQueue = [...queue];
-    updatedQueue[itemIndex] = { ...updatedQueue[itemIndex], status: 'completed' };
+    updatedQueue[itemIndex] = { ...updatedQueue[itemIndex], status: 'completed' as const };
     
     setQueue(reorderQueue(updatedQueue));
     
@@ -138,14 +138,14 @@ export const QueueProvider = ({ children }: { children: ReactNode }) => {
   const markAsActive = (queueId: string) => {
     // First, mark any currently active items as completed
     const updatedQueue = queue.map(item => 
-      item.status === 'active' ? { ...item, status: 'completed' } : item
+      item.status === 'active' ? { ...item, status: 'completed' as const } : item
     );
     
     const itemIndex = updatedQueue.findIndex(item => item.id === queueId);
     
     if (itemIndex === -1) return;
     
-    updatedQueue[itemIndex] = { ...updatedQueue[itemIndex], status: 'active' };
+    updatedQueue[itemIndex] = { ...updatedQueue[itemIndex], status: 'active' as const };
     
     setQueue(reorderQueue(updatedQueue));
     
