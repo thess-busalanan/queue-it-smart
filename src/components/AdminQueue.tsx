@@ -1,10 +1,9 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { useQueue } from '@/contexts/QueueContext';
-import { Check, UserCheck, Clock, ArrowRight, BellRing, CheckCircle2, UserMinus } from 'lucide-react';
+import { Check, UserCheck, Clock, ArrowRight, BellRing, CheckCircle2, UserMinus, BarChart, Users } from 'lucide-react';
 import { toast } from 'sonner';
 
 const AdminQueue: React.FC = () => {
